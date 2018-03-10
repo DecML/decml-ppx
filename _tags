@@ -1,0 +1,69 @@
+# OASIS_START
+# DO NOT EDIT (digest: c1d73ecaf7131ed836f4bdc809d0344b)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library decml
+"lib/decml.cmxs": use_decml
+# Library decml_ppx
+"ppx/decml_ppx.cmxs": use_decml_ppx
+<ppx/*.ml{,i,y}>: use_decml
+# Executable ppx_decml
+<ppx/decml_ppx_extension.{native,byte}>: package(compiler-libs.common)
+<ppx/*.ml{,i,y}>: package(compiler-libs.common)
+# Executable test_ppx_extension
+<test/ppx/test_ppx_extension.{native,byte}>: package(compiler-libs.common)
+<test/ppx/test_ppx_extension.{native,byte}>: package(oUnit)
+<test/ppx/test_ppx_extension.{native,byte}>: package(ppx_tools.metaquot)
+<test/ppx/test_ppx_extension.{native,byte}>: use_decml
+<test/ppx/test_ppx_extension.{native,byte}>: use_decml_ppx
+<test/ppx/*.ml{,i,y}>: package(compiler-libs.common)
+<test/ppx/*.ml{,i,y}>: package(oUnit)
+<test/ppx/*.ml{,i,y}>: package(ppx_tools.metaquot)
+<test/ppx/*.ml{,i,y}>: use_decml
+<test/ppx/*.ml{,i,y}>: use_decml_ppx
+# Executable confidence_interval
+<examples/confidence_interval/decml_confidence_interval.{native,byte}>: package(csv)
+<examples/confidence_interval/decml_confidence_interval.{native,byte}>: use_decml
+<examples/confidence_interval/*.ml{,i,y}>: package(csv)
+<examples/confidence_interval/*.ml{,i,y}>: use_decml
+# Executable linear_regression
+<examples/linear_regression/decml_linear_regression.{native,byte}>: package(csv)
+<examples/linear_regression/decml_linear_regression.{native,byte}>: use_decml
+<examples/linear_regression/*.ml{,i,y}>: package(csv)
+<examples/linear_regression/*.ml{,i,y}>: use_decml
+# Executable multivariate_regression
+<examples/multivariate_regression/decml_multivariate_regression.{native,byte}>: package(csv)
+<examples/multivariate_regression/decml_multivariate_regression.{native,byte}>: use_decml
+<examples/multivariate_regression/*.ml{,i,y}>: package(csv)
+<examples/multivariate_regression/*.ml{,i,y}>: use_decml
+# Executable neural_network
+<examples/neural_network/decml_neural_network.{native,byte}>: package(csv)
+<examples/neural_network/decml_neural_network.{native,byte}>: use_decml
+<examples/neural_network/*.ml{,i,y}>: package(csv)
+<examples/neural_network/*.ml{,i,y}>: use_decml
+# Executable regression_mixture
+<examples/regression_mixture/decml_regression_mixture.{native,byte}>: package(csv)
+<examples/regression_mixture/decml_regression_mixture.{native,byte}>: use_decml
+<examples/regression_mixture/*.ml{,i,y}>: package(csv)
+<examples/regression_mixture/*.ml{,i,y}>: use_decml
+# OASIS_STOP
+
+true: -traverse
+<{lib,ppx,test,examples}/**>: traverse
+
+<examples/**>: ppx_decml
+<test/ppx/*>: ppx_decml
+
+<**/*>: no_alias_deps

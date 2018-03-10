@@ -1,0 +1,8 @@
+An experimental library for transparent parameter management
+of machine learning models, via abductive decoupling.
+
+DecML is an experimental library for achieving a decoupling between a
+supervised machine learning model and its parameters. Models are
+defined in a custom ppx syntax, with the DecML extension managing the
+decoupling itself. The library also defines several modules for
+utility functions.

@@ -1,0 +1,23 @@
+# OASIS_START
+# DO NOT EDIT (digest: 356fa0a47f5f0f0deb96160c6e3b5230)
+version = "0.1"
+description =
+"An experimental library for transparent parameter management of machine learning models, via abductive decoupling."
+archive(byte) = "decml.cma"
+archive(byte, plugin) = "decml.cma"
+archive(native) = "decml.cmxa"
+archive(native, plugin) = "decml.cmxs"
+exists_if = "decml.cma"
+package "ppx" (
+ version = "0.1"
+ description = "Syntactic extensions for DecML."
+ requires = "decml"
+ archive(byte) = "decml_ppx.cma"
+ archive(byte, plugin) = "decml_ppx.cma"
+ archive(native) = "decml_ppx.cmxa"
+ archive(native, plugin) = "decml_ppx.cmxs"
+ ppx = "ppx_decml"
+ exists_if = "decml_ppx.cma"
+)
+# OASIS_STOP
+

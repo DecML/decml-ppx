@@ -1,0 +1,26 @@
+opam-version: "1.2"
+name: "decml"
+version: "0.1"
+maintainer: "Victor Darvariu <victor.darvariu@gmail.com>"
+authors: [ "Victor Darvariu <victor.darvariu@gmail.com>" ]
+license: "LGPL"
+homepage: "https://github.com/decml/decml-ppx"
+bug-reports: "https://github.com/decml/decml-ppx/issues"
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-build"]
+]
+install: ["ocaml" "setup.ml" "-install"]
+remove: [
+  ["ocaml" "%{etc}%/decml/setup.ml" "-C" "%{etc}%/decml" "-uninstall"]
+]
+build-test: [
+  ["ocaml" "setup.ml" "-configure" "--enable-tests"]
+  ["ocaml" "setup.ml" "-build"]
+  ["ocaml" "setup.ml" "-test"]
+]
+depends: [
+  "ocamlbuild" {build}
+  "ocamlfind" {build}
+]
+available: [ ocaml-version >= "4.05" ]

@@ -1,0 +1,15 @@
+*.o
+*.cmx
+*.cmi
+*.out
+*_out
+*.native
+_build/
+configure
+
+*.native
+*.byte
+*.docdir
+
+setup.data
+setup.log

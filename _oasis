@@ -1,0 +1,138 @@
+OASISFormat:            0.4
+OCamlVersion:           >= 4.05
+Name:                   decml
+Version:                0.1
+Synopsis:               An experimental library for transparent parameter management
+                        of machine learning models, via abductive decoupling.
+Description:            DecML is an experimental library for achieving a decoupling
+                        between a supervised machine learning model and its parameters.
+                        Models are defined in a custom ppx syntax, with the DecML extension
+                        managing the decoupling itself. The library also defines several modules
+                        for utility functions.
+Maintainers:            Victor Darvariu <victor.darvariu@gmail.com>
+Authors:                Victor Darvariu <victor.darvariu@gmail.com>
+License:                LGPL
+Homepage:               https://github.com/decml/decml-ppx
+Plugins:                META (0.4), StdFiles (0.4), DevFiles (0.4)
+XStdFilesAUTHORS:       false
+BuildTools:             ocamlbuild
+
+PostCleanCommand: rm -rf _build/ configure *.native
+
+
+Flag ppx
+  Default:              true
+  Description:          Build ppx_decml
+
+##
+## Adjacent library
+##
+
+Library decml
+  Path:                 lib
+  FindlibName:          decml
+  Modules:              Decml,
+                        Decml_optimisation,
+                        Decml_linalg,
+                        Decml_preprocess
+
+##
+## PPX extension
+##
+
+Library decml_ppx
+  Path:                 ppx
+  FindlibName:          ppx
+  FindlibParent:        decml
+  Install$:             flag(ppx)
+  Build$:               flag(ppx)
+  Modules:              Decml_ppx_extension,
+                        Decml_ppx_translators,
+                        Decml_ppx_utils
+  BuildDepends:         decml
+  XMETARequires:        decml
+  XMETADescription:     Syntactic extensions for DecML.
+  XMETAExtraLines:      ppx = "ppx_decml"
+
+Executable ppx_decml
+  Path:                 ppx
+  MainIs:               decml_ppx_extension.ml
+  Install$:             flag(ppx)
+  Build$:               flag(ppx)
+  BuildDepends:         compiler-libs.common
+  CompiledObject:       best
+
+##
+## Tests
+##
+
+Test test_ppx_extension
+  Run$:                 flag(tests) && flag(ppx)
+  Command:              $test_ppx_extension
+  WorkingDirectory:     test/ppx/
+
+Executable test_ppx_extension
+  Path:                 test/ppx
+  MainIs:               test_ppx_extension.ml
+  Build$:               flag(tests) && flag(ppx)
+  Install:              false
+  BuildTools:           ppx_decml
+  BuildDepends:         decml,decml.ppx,oUnit,ppx_tools.metaquot
+  CompiledObject:       best
+
+##
+## Examples
+##
+
+Flag examples
+  Description:    Build examples
+  Default:        false
+
+Executable confidence_interval
+  Path:           examples/confidence_interval
+  MainIs:         decml_confidence_interval.ml
+  Build$:         flag(examples) && flag(ppx)
+  BuildDepends:   decml,csv
+  Install:        false
+  CompiledObject: best
+
+Executable linear_regression
+  Path:           examples/linear_regression
+  MainIs:         decml_linear_regression.ml
+  Build$:         flag(examples) && flag(ppx)
+  BuildDepends:   decml,csv
+  Install:        false
+  CompiledObject: best
+
+Executable multivariate_regression
+  Path:           examples/multivariate_regression
+  MainIs:         decml_multivariate_regression.ml
+  Build$:         flag(examples) && flag(ppx)
+  BuildDepends:   decml,csv
+  Install:        false
+  CompiledObject: best
+
+Executable neural_network
+  Path:           examples/neural_network
+  MainIs:         decml_neural_network.ml
+  Build$:         flag(examples) && flag(ppx)
+  BuildDepends:   decml,csv
+  Install:        false
+  CompiledObject: best
+
+Executable regression_mixture
+  Path:           examples/regression_mixture
+  MainIs:         decml_regression_mixture.ml
+  Build$:         flag(examples) && flag(ppx)
+  BuildDepends:   decml,csv
+  Install:        false
+  CompiledObject: best
+
+##
+## Remote source information
+##
+
+SourceRepository head
+  Type:           git
+  Location:       https://github.com/DecML/decml-ppx.git
+  Browser:        https://github.com/DecML/decml-ppx
